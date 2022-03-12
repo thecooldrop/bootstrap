@@ -1,47 +1,46 @@
 enabled:
   argocd: true
 
-argo-cd:
-  server:
-    configEnabled: true
-    config:
-      repositories: |
-        - name: argo-helm
-          type: helm
-          url: https://argoproj.github.io/argo-helm
-        - type: git
-          url: https://github.com/thecooldrop/bootstrap.git
-    additionalApplications:
-    - name: argocd
+server:
+  configEnabled: true
+  config:
+    repositories: |
+      - name: argo-helm
+        type: helm
+        url: https://argoproj.github.io/argo-helm
+      - type: git
+        url: https://github.com/thecooldrop/bootstrap.git
+  additionalApplications:
+  - name: argocd
+    namespace: argocd
+    destination:
       namespace: argocd
-      destination:
-        namespace: argocd
-        server: https://kubernetes.default.svc
-      project: argocd
-      source:
-        helm:
-          version: v3
-          valueFiles:
-          - values.yaml
-        path: chart
-        repoURL: https://github.com/thecooldrop/bootstrap.git
-        targetRevision: HEAD
-      syncPolicy:
-        syncOptions:
-          - CreateNamespace=true
-    additionalProjects:
-    - name: argocd
-      namespace: argocd
-      additionalLabels: {}
-      additionalAnnotations: {}
-      description: Argocd project
-      sourceRepos:
-      - '*'
-      destinations:
-      - namespace: argocd
-        server: https://kubernetes.default.svc
-      clusterResourceWhitelist:
-      - group: '*'
-        kind: '*'
-      orphanedResource:
-        warn: false  
+      server: https://kubernetes.default.svc
+    project: argocd
+    source:
+      helm:
+        version: v3
+        valueFiles:
+        - values.yaml
+      path: chart
+      repoURL: https://github.com/thecooldrop/bootstrap.git
+      targetRevision: HEAD
+    syncPolicy:
+      syncOptions:
+        - CreateNamespace=true
+  additionalProjects:
+  - name: argocd
+    namespace: argocd
+    additionalLabels: {}
+    additionalAnnotations: {}
+    description: Argocd project
+    sourceRepos:
+    - '*'
+    destinations:
+    - namespace: argocd
+      server: https://kubernetes.default.svc
+    clusterResourceWhitelist:
+    - group: '*'
+      kind: '*'
+    orphanedResource:
+      warn: false  
