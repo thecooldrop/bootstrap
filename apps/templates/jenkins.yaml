@@ -9,5 +9,5 @@ spec:
     project: ""
     source:
         chart: jenkins-operator
-        targetRevision: 0.6.0
+        targetRevision: 0.7.0
         repoURL: https://raw.githubusercontent.com/jenkinsci/kubernetes-operator/master/chart
