@@ -41,7 +41,7 @@ argo-cd:
         destination:
           namespace: argocd
           server: https://kubernetes.default.svc
-        project: ""
+        project: "default"
         source:
           helm:
             version: v3
