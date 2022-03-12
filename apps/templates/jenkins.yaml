@@ -16,4 +16,3 @@ spec:
       kind: Jenkins
       jsonPointers:
       - /spec/master/containers
-      - /spec/validateSecurityWarnings
