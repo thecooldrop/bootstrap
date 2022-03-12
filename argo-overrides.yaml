@@ -36,6 +36,21 @@ argo-cd:
         syncPolicy:
           syncOptions:
           - CreateNamespace=true
+      - name: apps
+        namespace: argocd
+        destination:
+          namespace: argocd
+          server: https://kubernetes.default.svc
+        project: ""
+        source:
+          helm:
+            version: v3
+          path: apps
+          repoURL: https://github.com/thecooldrop/bootstrap.git
+          targetRevision: HEAD
+        syncPolicy:
+          syncOptions:
+          - CreateNamespace=true
     additionalProjects: 
     - name: argocd
       namespace: argocd
