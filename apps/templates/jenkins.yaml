@@ -14,5 +14,5 @@ spec:
     ignoreDifferences:
     - group: jenkins.io
       kind: Jenkins
-      jsonPointer:
+      jsonPointers:
       - /spec/master/containers
