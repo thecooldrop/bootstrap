@@ -1,6 +1,3 @@
-enabled:
-  argocd: true
-
 server:
   configEnabled: true
   config:
