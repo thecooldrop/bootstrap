@@ -11,3 +11,7 @@ spec:
         repoURL: https://github.com/jenkinsci/kubernetes-operator
         path: chart/jenkins-operator
         targetRevision: v0.7.0
+    ignoreDifferences:
+    - kind: Jenkins
+      managedFieldsManagers:
+      - manager
