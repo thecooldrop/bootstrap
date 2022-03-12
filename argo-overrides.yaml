@@ -1,53 +1,54 @@
-## ArgoCD configuration
-## Ref: https://github.com/argoproj/argo-cd
-##
-## Server
-server:
-  ## ArgoCD config
-  ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
-  configEnabled: true
-  config:
-    repositories: |
-      - type: git
-        url: https://github.com/thecooldrop/bootstrap.git
-      - name: argo-helm
-        type: helm
-        url: https://argoproj.github.io/argo-helm
-      - name: dandy
-        type: helm
-        url: https://dandydeveloper.github.io/charts/
-  additionalApplications: 
+argo-cd:
+  ## ArgoCD configuration
+  ## Ref: https://github.com/argoproj/argo-cd
+  ##
+  ## Server
+  server:
+    ## ArgoCD config
+    ## reference https://github.com/argoproj/argo-cd/blob/master/docs/operator-manual/argocd-cm.yaml
+    configEnabled: true
+    config:
+      repositories: |
+        - type: git
+          url: https://github.com/thecooldrop/bootstrap.git
+        - name: argo-helm
+          type: helm
+          url: https://argoproj.github.io/argo-helm
+        - name: dandy
+          type: helm
+          url: https://dandydeveloper.github.io/charts/
+    additionalApplications: 
+      - name: argocd
+        namespace: argocd
+        destination:
+          namespace: argocd
+          server: https://kubernetes.default.svc
+        project: argocd
+        source:
+          helm:
+            version: v3
+            valueFiles:
+            - values.yaml
+            - ../argo-overrides.yaml
+          path: chart
+          repoURL: https://github.com/thecooldrop/bootstrap.git
+          targetRevision: HEAD
+        syncPolicy:
+          syncOptions:
+          - CreateNamespace=true
+    additionalProjects: 
     - name: argocd
       namespace: argocd
-      destination:
-        namespace: argocd
+      additionalLabels: {}
+      additionalAnnotations: {}
+      description: Argocd Project
+      sourceRepos:
+      - '*'
+      destinations:
+      - namespace: argocd
         server: https://kubernetes.default.svc
-      project: argocd
-      source:
-        helm:
-          version: v3
-          valueFiles:
-          - values.yaml
-          - ../argo-overrides.yaml
-        path: argo-cd
-        repoURL: https://github.com/thecooldrop/bootstrap.git
-        targetRevision: HEAD
-      syncPolicy:
-        syncOptions:
-        - CreateNamespace=true
-  additionalProjects: 
-  - name: argocd
-    namespace: argocd
-    additionalLabels: {}
-    additionalAnnotations: {}
-    description: Argocd Project
-    sourceRepos:
-    - '*'
-    destinations:
-    - namespace: argocd
-      server: https://kubernetes.default.svc
-    clusterResourceWhitelist:
-    - group: '*'
-      kind: '*'
-    orphanedResources:
-      warn: false
+      clusterResourceWhitelist:
+      - group: '*'
+        kind: '*'
+      orphanedResources:
+        warn: false
