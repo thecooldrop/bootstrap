@@ -31,7 +31,13 @@ jenkins:
   image: jenkins/jenkins:2.332.1-lts-jdk11
 
   # env contains jenkins container environment variables
-  env: []
+  env:
+  - name: JAVA_OPTS
+    value: >-
+      -XX:MinRAMPercentage=50.0
+      -XX:MaxRamPercentage=80.0
+      -Djenkins.install.runSetupWizard=false
+      -Djava.awt.headless=true
 
   # imagePullPolicy defines policy for pulling images
   imagePullPolicy: Always
