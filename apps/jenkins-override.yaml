@@ -227,7 +227,7 @@ jenkins:
     # resources used by backup container
     resources:
       limits:
-        cpu: 1000m
+        cpu: "1"
         memory: 2Gi
       requests:
         cpu: 100m
